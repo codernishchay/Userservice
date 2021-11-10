@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"userservice/app"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
+	app.App()
+	app.DBConnect()
 	fmt.Println(r)
-	DBConnect()
 	fmt.Println(" User service ")
 }
