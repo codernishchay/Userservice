@@ -12,8 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// https://stackoverflow.com/questions/37990507/golang-mgo-how-can-i-store-date-not-isodate-in-mongodb
-
+// CreateUser to create a user
 func CreateUser(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	user := new(User)
@@ -41,8 +40,8 @@ func CreateUser(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(result)
 }
 
+// Upadate User to update user using user id , taking user id from query parameter
 func UpdateUser(c *gin.Context) {
-	fmt.Println("Hello there")
 	c.Header("Content-Type", "application/json")
 	id, er := primitive.ObjectIDFromHex(c.Query("id"))
 	fmt.Println(id)
@@ -53,7 +52,6 @@ func UpdateUser(c *gin.Context) {
 	var user User
 
 	filter := bson.M{"_id": id}
-	fmt.Println(filter)
 
 	_ = json.NewDecoder(c.Request.Body).Decode(&user)
 
@@ -76,6 +74,7 @@ func UpdateUser(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(user)
 }
 
+// GetUser will return all the users listed in the dateabase
 func GetUser(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	fmt.Println("get request heree")
@@ -103,6 +102,7 @@ func GetUser(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(users)
 }
 
+// Delete user will delete a user from database, the userid to be provided usig query parameter
 func DeleteUser(c *gin.Context) {
 	fmt.Println(" delete endpoint")
 	id, er := primitive.ObjectIDFromHex(c.Query("id"))
