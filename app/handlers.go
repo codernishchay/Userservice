@@ -18,6 +18,10 @@ func CreateUser(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	user := new(User)
 	err := json.NewDecoder(c.Request.Body).Decode(&user)
+	now := time.Now()
+	if user.DOB == "" {
+		user.DOB = now.String()
+	}
 	id := primitive.NewObjectIDFromTimestamp(time.Time{})
 	fmt.Println(id)
 	if err != nil {
