@@ -28,6 +28,9 @@ func CreateUser(c *gin.Context) {
 		log.Fatal(err)
 	}
 	user.ID = id
+	user.CreatedAt = time.Now().String()
+	user.DOB = time.Now().Format(user.DOB)
+	fmt.Println(user.DOB)
 	dbcollection := DATABASE.Collection("users")
 	result, err := dbcollection.InsertOne(context.TODO(), user)
 	if err != nil {
