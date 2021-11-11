@@ -12,8 +12,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var Database *mongo.Database
+var DATABASE *mongo.Database
 var DBclient *mongo.Client
+var DBCollection *mongo.Collection
 
 func DBConnect() {
 	err := godotenv.Load(".env")
@@ -22,14 +23,16 @@ func DBConnect() {
 	}
 	value := os.Getenv("MONGOURI")
 	fmt.Println(value)
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(value))
+	clientOptions := options.Client().
+		ApplyURI(value)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+
 	fmt.Println("Connected to database")
-	defer client.Disconnect(ctx)
 	DBclient = client
-	Database = client.Database("userdb")
+	DATABASE = client.Database("userdb")
 }

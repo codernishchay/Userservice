@@ -9,8 +9,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	app.App()
-	app.DBConnect()
+	app.App(r)
 	fmt.Println(r)
 	fmt.Println(" User service ")
 }

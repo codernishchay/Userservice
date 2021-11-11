@@ -1,9 +1,11 @@
 package app
 
-import "fmt"
+import (
+	"github.com/gin-gonic/gin"
+)
 
-func App() {
+func App(c *gin.Engine) {
+
 	DBConnect()
-	fmt.Println("App")
-	Routers()
+	Routers(c)
 }
