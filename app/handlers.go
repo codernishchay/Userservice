@@ -34,32 +34,42 @@ func CreateUser(c *gin.Context) {
 	json.NewEncoder(c.Writer).Encode(result)
 }
 
-// func UpdateUser(c *gin.Context) {
-// 	c.Header("Content-Type", "application/json")
-// 	id, _ := primitive.ObjectIDFromHex(c.Param("id"))
-// 	var user User
-// 	filter := bson.M{"_id": id}
-// 	_ = json.NewDecoder(c.Request.Body).Decode(&user)
-// 	update := bson.D{
-// 		{
-// 			"$set", bson.D{
-// 				{"name", user.Name},
-// 				{"dob", user.DOB},
-// 				{"address", user.Address},
-// 				{"description", user.Description},
-// 			},
-// 		},
-// 	}
-// 	err := DATABASE.Collection("users").FindOneAndUpdate(context.TODO(), filter, update).Decode(&user)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	user.ID = id
-// 	json.NewEncoder(c.Writer).Encode(user)
-// }
+func UpdateUser(c *gin.Context) {
+	fmt.Println("Hello there")
+	c.Header("Content-Type", "application/json")
+	id, er := primitive.ObjectIDFromHex(c.Query("id"))
+	fmt.Println(id)
+	fmt.Println(er)
+	if er != nil {
+		log.Fatal(er)
+	}
+	var user User
+
+	filter := bson.M{"_id": id}
+	fmt.Println(filter)
+
+	_ = json.NewDecoder(c.Request.Body).Decode(&user)
+
+	update := bson.D{
+		{
+			"$set", bson.D{
+				{"name", user.Name},
+				{"dob", user.DOB},
+				{"address", user.Address},
+				{"description", user.Description},
+			},
+		},
+	}
+
+	err := DATABASE.Collection("users").FindOneAndUpdate(context.TODO(), filter, update).Decode(&user)
+	if err != nil {
+		log.Fatal(err)
+	}
+	user.ID = id
+	json.NewEncoder(c.Writer).Encode(user)
+}
 
 func GetUser(c *gin.Context) {
-	// id := c.Request.Body
 	c.Header("Content-Type", "application/json")
 	fmt.Println("get request heree")
 	var users []User
@@ -87,11 +97,17 @@ func GetUser(c *gin.Context) {
 }
 
 func DeleteUser(c *gin.Context) {
-	id := c.Request.Body
-	bson := bson.M{"id": id}
+	fmt.Println(" delete endpoint")
+	id, er := primitive.ObjectIDFromHex(c.Query("id"))
+	if er != nil {
+		log.Fatal(er)
+	}
+	bson := bson.M{"_id": id}
+	fmt.Println(bson)
 	results, err := DATABASE.Collection("users").DeleteOne(context.TODO(), bson)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(" deleted one user , ", results.DeletedCount)
+	json.NewEncoder(c.Writer).Encode(results)
 }
