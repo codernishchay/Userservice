@@ -14,6 +14,7 @@ type User struct {
 	DOB         string             `json:"dob" bson:"dob"`
 	Address     string             `json:"address" bson:"address"`
 	Description string             `json:"description" bson:"description"`
+	CreatedAt   string               
 }
 ```
 
