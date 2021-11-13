@@ -1,11 +1,21 @@
 # User Service
 
-Database used : Mongodb 
+Setup 
 
-Language : Golang 
+```go
+git clone https://github.com/codernishchay/Userservice 
 
+cd UserService 
 
-User Model 
+// create a .env file and add 
+// MONGOURI= "databse url"  
+
+go run main.go  
+```
+
+ 
+
+User Model
 
 ```go
 type User struct {
@@ -14,31 +24,38 @@ type User struct {
 	DOB         string             `json:"dob" bson:"dob"`
 	Address     string             `json:"address" bson:"address"`
 	Description string             `json:"description" bson:"description"`
+	CreatedAt   string               
 }
 ```
 
-this app consists of 4 endpoints : 
+/get 
 
-     create : to create a user to database.  
+```go
+To get all the users from database. 
+```
 
-     update : to update a user using their user id
+![Readme1.png](User%20Service%20ae9bd4f32c74436fbac7b609ba96e524/Readme1.png)
 
-     delete : to delete user using their user id 
+/create
 
-     get  : to get list of all users 
+```go
+To create a new user to the database. 
+```
 
-Update
+![Readme2.png](User%20Service%20ae9bd4f32c74436fbac7b609ba96e524/Readme2.png)
 
-![s4.png](User%20Service%20db98ab5a8c844f07ae8025765cdc2cb4/s4.png)
+/update
 
-Delete 
+```go
+To update a user data using its user ID 
+```
 
-![s1.png](User%20Service%20db98ab5a8c844f07ae8025765cdc2cb4/s1.png)
+![Readme3.png](User%20Service%20ae9bd4f32c74436fbac7b609ba96e524/Readme3.png)
 
-GET 
+/delete
 
-![s44.png](User%20Service%20db98ab5a8c844f07ae8025765cdc2cb4/s44.png)
+```go
+To delete user from database using the userID 
+```
 
-POST
-
-![s2.png](User%20Service%20db98ab5a8c844f07ae8025765cdc2cb4/s2.png)
+![Readme4.png](User%20Service%20ae9bd4f32c74436fbac7b609ba96e524/Readme4.png)
