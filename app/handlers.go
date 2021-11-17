@@ -76,7 +76,6 @@ func UpdateUser(c *gin.Context) {
 
 // GetUser will return all the users listed in the dateabase
 func GetUser(c *gin.Context) {
-	c.Header("Content-Type", "application/json")
 	fmt.Println("get request heree")
 	var users []User
 	cursor, err := DATABASE.Collection("users").Find(context.TODO(), bson.M{})
@@ -84,7 +83,6 @@ func GetUser(c *gin.Context) {
 		log.Fatal(err)
 	}
 	fmt.Println(cursor)
-
 	if err = cursor.All(context.TODO(), &users); err != nil {
 		log.Fatal(err)
 	}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"userservice/app"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +8,6 @@ import (
 
 func main() {
 	r := gin.Default()
-	app.App(r)
-	fmt.Println(r)
-	fmt.Println(" User service ")
+	app.DBConnect()
+	app.Routers(r)
 }
